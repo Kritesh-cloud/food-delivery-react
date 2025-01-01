@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+module.exports = {
+  // prefix: 'tw-', // Optional: Add prefix to avoid conflicts with MUI classes
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}", // Update this based on your project structure
+    "./public/index.html",
+  ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
-
+};
