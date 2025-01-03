@@ -16,87 +16,47 @@ export const setHomeRestaurant = () => {
 export const HomeRestaurantProvider = ({ children }) => {
   const [browseList, setBrowseList] = useState([]);
   const [browseListLoading, setBrowseListLoading] = useState(true);
-  const [browseListError, setBrowseListError] = useState("");
 
-  const [restaurantList, setRestaurantList] = useState([]);
-  const [restaurantListLoading, setRestaurantListLoading] = useState(true);
-  const [restaurantListError, setRestaurantListError] = useState("");
+  const [browseList1, setBrowseList1] = useState([]);
+  const [browseList2, setBrowseList2] = useState([]);
+  const [browseList3, setBrowseList3] = useState([]);
+  const [browseList4, setBrowseList4] = useState([]);
+  const [browseList5, setBrowseList5] = useState([]);
+  const [browseList6, setBrowseList6] = useState([]);
 
-  const [filteredrestaurantList, setFilteredrestaurantList] = useState([]);
-  const [restaurantLoading, setRestauranLoading] = useState(true);
-
-  const getBrowseList = () => {
+  const getRestaurant = (browseId) => {
     axios
-      .get(`http://localhost:8080/user/browse/list-browse-content`)
+      .get(`http://localhost:8080/list-restaurant-details/` + browseId)
       .then((res) => {
-        setBrowseList(res.data);
+        // console.log("browseId", browseId);
+        if (browseId == 0) {
+          setBrowseList1(...browseList1, res.data);
+          setBrowseList(...browseList,browseList1);
+        } else if (browseId == 1) {
+          setBrowseList2(...browseList2, res.data);
+          setBrowseList(...browseList,browseList2);
+        } else if (browseId == 2) {
+          setBrowseList3(...browseList3, res.data);
+          setBrowseList(...browseList,browseList3);
+        }
       })
       .catch((err) => {
-        setBrowseListError("API server error");
         console.log("err", err);
       })
       .finally(setBrowseListLoading(false));
   };
-  const getRestaurant = () => {
-    axios
-      .get(`http://localhost:8080/list-restaurant-details`)
-      .then((res) => {
-        setRestaurantList(res.data);
-      })
-      .catch((err) => {
-        setRestaurantListError("API server error");
-        console.log("err", err);
-      })
-      .finally(setRestaurantListLoading(false));
-  };
 
-  const filterRestuarntList = () => {
-    // console.log("browseList", browseList);
-
-    if (!browseListLoading && !restaurantListLoading) {
-      setRestauranLoading(false);
-      
-      browseList.forEach((brlist, index) => {
-        
-        const newRestaurantList = {
-          id: index + 1,
-          name: brlist.name,
-          list: restaurantList.filter((item) => brlist.ids.includes(item.id)),
-        };
-        console.log("==========================================================");
-        console.log("index",index);
-        console.log("brlist",brlist.ids);
-        console.log("restaurantList",restaurantList);
-        console.log("newRestaurantList",newRestaurantList);
-
-        setFilteredrestaurantList([...filteredrestaurantList,newRestaurantList,])
-        // setFilteredrestaurantList((oldRestaurantList) => [
-        //   ...oldRestaurantList,
-        //   newRestaurantList,
-        // ]);
-      });
-      console.log("---------------------------------");
-      console.log("filteredrestaurantList.len",filteredrestaurantList.length);
-      console.log(filteredrestaurantList);
-    }
-  };
   useEffect(() => {
-    setFilteredrestaurantList([]);
-    getBrowseList();
-    getRestaurant();
+    getRestaurant(0);
+    getRestaurant(1);
+    getRestaurant(2);
   }, []);
-
-  useEffect(() => {
-    filterRestuarntList();
-  }, [browseList, restaurantList]);
 
   return (
     <HomeRestaurantContext.Provider
-      value={{browseList, filteredrestaurantList, restaurantLoading }}
+      value={{ browseList1, browseList2, browseList3,browseList, browseListLoading }}
     >
-      {/* <HomeRestaurantContextUpdate.Provider> */}
       {children}
-      {/* </HomeRestaurantContextUpdate.Provider> */}
     </HomeRestaurantContext.Provider>
   );
 };

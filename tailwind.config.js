@@ -1,12 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  // prefix: 'tw-', // Optional: Add prefix to avoid conflicts with MUI classes
+
+const flowbite = require("flowbite-react/tailwind");
+
+
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Update this based on your project structure
-    "./public/index.html",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
-};
+  plugins: [
+    flowbite.plugin(),
+  ],
+}

@@ -11,21 +11,21 @@ export const navigation = [
   { title: "Menu", link: "/menu" },
   { title: "Contact Us", link: "/contact" },
 ];
-export const navigationRightLink = [
-  { title: "Search", icon: <SearchIcon />, link: "/search", isIcon: true },
-  {
+export const navigationRightLink = {
+  search:{ title: "Search", icon: <SearchIcon />, link: "/search", isIcon: true },
+  basket:{
     title: "Shopping Basket",
     icon: <ShoppingBasketIcon />,
     link: "/cart",
     isIcon: true,
   },
-  {
+  signIn:{
     title: "Sign In",
     icon: <DoNotDisturbAltIcon />,
     link: "/signIn",
     isIcon: false,
   },
-];
+};
 
 export const logedInNavigation = [
   { title: "Home", link: "/user/home" },

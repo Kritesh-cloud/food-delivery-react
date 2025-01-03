@@ -1,30 +1,131 @@
-import { Typography } from "@mui/material";
-import React from "react";
+import { Button, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { getHomeRestaurant } from "../../context/HomeRestaurantContext";
 
-const Restaurants = () => {
-  // const homeRestaurantList = getHomeRestaurant();
-  const {browseList, filteredrestaurantList, restaurantLoading } = getHomeRestaurant();
-
-  // console.log("restaurantLoading", restaurantLoading);
-  // console.log("filteredrestaurantList",filteredrestaurantList);
+const Restaurant1 = ({ item, index }) => {
   return (
-    <div className="flexcol mx-24 mt-20">
-      <Typography variant="h4" sx={{ color: "#000", fontWeight: 600 }}>
-        Best Eateries for Every Taste
+    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer">
+      <div className="flex ">
+        <img src={item.backgroundUrl} className="rounded" />
+      </div>
+      <div className="flex gap-3 bor pb-3">
+        <div className="bor">
+          <img src={item.iconUrl} className="w-10 bor" />
+        </div>
+        <div className="flexcol bor">
+          <div>{item.name}</div>
+          <div className="text-[12px] text-[#444]">{item.address}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Restaurant2 = ({ item, index }) => {
+  return (
+    <div key={index} className="flexcol gap-3 bor w-[290px]  cursor-pointer">
+      <div className="flex ">
+        <img
+          src={item.backgroundUrl}
+          className=""
+          style={{ boxShadow: "0 0 6px #000" }}
+        />
+      </div>
+      <div className="flex gap-3 bor">
+        <div className="bor none">
+          <img src={item.iconUrl} className="w-10 bor" />
+        </div>
+        <div className="flexcol bor">
+          <div>{item.name}</div>
+          <div className="text-[12px] text-[#444]">{item.address}</div>
+        </div>
+      </div>
+      <div className="bor">
+        <Button variant="outlined">Order Now</Button>
+      </div>
+    </div>
+  );
+};
+
+const Restaurant3 = ({ item, index }) => {
+  return (
+    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer">
+      <div className="flex ">
+        <img src={item.backgroundUrl} className="rounded" />
+      </div>
+      <div className="flex gap-3 bor pb-3">
+        <div className="bor">
+          <img src={item.iconUrl} className="w-10 bor" />
+        </div>
+        <div className="flexcol bor">
+          <div>{item.name}</div>
+          <div className="text-[12px] text-[#444]">{item.address}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Restaurants = ({ title, browseId }) => {
+  const {
+    browseList1,
+    browseList2,
+    browseList3,
+    browseList,
+    browseListLoading,
+  } = getHomeRestaurant();
+
+  const [showBrowseList, setShowBrowseList] = useState([]);
+
+  useEffect(() => {
+    if (browseId == 1) {
+      setShowBrowseList(browseList1);
+    } else if (browseId == 2) {
+      setShowBrowseList(browseList2);
+    } else if (browseId == 3) {
+      setShowBrowseList(browseList3);
+    }
+  }, [browseList1, browseList2, browseList3]);
+  return (
+    <div
+      className={`${
+        browseId == 3 ? "mx-0 px-24 py-10 bg-[#1a1a1a] text-white bor" : "mx-24"
+      } flexcol  mt-20 bor`}
+    >
+      <Typography variant="h5" sx={{ fontWeight: 600 }}>
+        {title}
       </Typography>
-      <div className="hideScroll flex gap-10 overflow-auto borx">
-        <div className={`${restaurantLoading ? "" : "hidden"}`}>Loading...</div>
+      <div className="hideScroll flex gap-10 overflow-auto bor">
+        <div className={`${browseListLoading ? "" : "hidden"}`}>Loading...</div>
         <div
           className={`${
-            restaurantLoading ? "hidden" : ""
-          } w100 flex gap-5 jcsb mt-5 borr`}
+            browseListLoading ? "hidden" : ""
+          } w100 flex  mt-5 bor overflow-auto hideScroll`}
         >
-          {filteredrestaurantList.map((item, index) => (
-            <div key={index} className="borx">
-              {item.id}
-            </div>
-          ))}
+          <div
+            className={`${browseId == 1 ? "gap-8" : ""} ${browseId == 2 ? "gap-3" : ""} ${browseId == 3 ? "gap-5" : ""} flex `}
+          >
+            {showBrowseList &&
+              showBrowseList.map((item, index) => (
+                <div key={index} className="flex">
+                  {browseId == 1 ? (
+                    <Restaurant1 item={item} index={index} />
+                  ) : (
+                    ""
+                  )}
+                  {browseId == 2 ? (
+                    <Restaurant2 item={item} index={index} />
+                  ) : (
+                    ""
+                  )}
+                  {browseId == 3 ? (
+                    <Restaurant3 item={item} index={index} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </div>
