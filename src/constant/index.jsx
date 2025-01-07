@@ -4,22 +4,30 @@ import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 
 import food1 from "../assets/images/food_1.png";
 
+export const dashboardAuthority = ["owner", "staff", "delivery", "admin", "moderator"]
+
 export const navigation = [
-  { title: "Home", link: "/" },
-  { title: "About", link: "/about" },
-  { title: "Service", link: "/service" },
-  { title: "Menu", link: "/menu" },
-  { title: "Contact Us", link: "/contact" },
+  { title: "Home", link: "/", loggedIn: false },
+  { title: "About", link: "/about", loggedIn: false },
+  { title: "Service", link: "/service", loggedIn: false },
+  { title: "Menu", link: "/menu", loggedIn: false },
+  { title: "Contact Us", link: "/contact", loggedIn: false },
+  { title: "Dashboard", link: "/dashboard/restaurant/list", loggedIn: true },
 ];
 export const navigationRightLink = {
-  search:{ title: "Search", icon: <SearchIcon />, link: "/search", isIcon: true },
-  basket:{
+  search: {
+    title: "Search",
+    icon: <SearchIcon />,
+    link: "/search",
+    isIcon: true,
+  },
+  basket: {
     title: "Shopping Basket",
     icon: <ShoppingBasketIcon />,
     link: "/cart",
     isIcon: true,
   },
-  signIn:{
+  signIn: {
     title: "Sign In",
     icon: <DoNotDisturbAltIcon />,
     link: "/signIn",
@@ -96,4 +104,149 @@ export const homeFoodCategory = [
   { name: "Steaks", link: "/steaks", icon: "🥩", image: food1 },
   { name: "Sandwiches", link: "/sandwiches", icon: "🥪", image: food1 },
   { name: "Sushi", link: "/sushi", icon: "🍣", image: food1 },
+];
+
+export const sideBarData = [
+  {
+    for: ["owner", "staff", "delivery", "admin", "moderator"],
+    title: "Home",
+    link: "/",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [],
+  },
+  {
+    for: ["admin"],
+    title: "Category",
+    link: "",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [
+      { title: "Add", link: "category/add", mainItem: false, selected: false },
+      {
+        title: "List",
+        link: "category/list",
+        mainItem: false,
+        selected: false,
+      },
+    ],
+  },
+  {
+    for: ["admin", "moderator"],
+    title: "List Restaurant",
+    link: "restaurant/list",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [],
+  },
+  {
+    for: ["admin", "moderator"],
+    title: "Browse Content",
+    link: "browse-content/list",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [
+      // { title: "Manage", link: "/browse-content/manage", mainItem: false, selected: false },
+      // { title: "List", link: "/browse-content/list", mainItem: false, selected: false },
+    ],
+  },
+  {
+    for: ["admin"],
+    title: "Assign Authority",
+    link: "assign-authority/moderator",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [
+      {
+        title: "Moderator",
+        link: "assign-authority/moderator",
+        mainItem: false,
+        selected: false,
+      },
+      {
+        title: "Delivery",
+        link: "assign-authority/delivery",
+        mainItem: false,
+        selected: false,
+      },
+    ],
+  },
+  {
+    for: ["moderator"],
+    title: "Assign Authority",
+    link: "assign-authority/moderator",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [
+      // { title: "Assign", link: "assign-authority/moderator", mainItem: false, selected: false },
+      {
+        title: "Delivery",
+        link: "assign-authority/delivery",
+        mainItem: false,
+        selected: false,
+      },
+    ],
+  },
+  // {
+  //   for: ["admin"],
+  //   title: "Moderator Authority",
+  //   link: "assign-authority/moderator",
+  //   mainItem: true,
+  //   open: false,
+  //   selected: false,
+  //   subList: [
+  //     // { title: "Assign", link: "/assign-authority/", mainItem: false, selected: false },
+  //     // { title: "List", link: "", mainItem: false, selected: false },
+  //   ],
+  // },
+  // {
+  //   for: ["admin", "moderator"],
+  //   title: "Delivery Authority",
+  //   link: "assign-authority/delivery",
+  //   mainItem: true,
+  //   open: false,
+  //   selected: false,
+  //   subList: [
+  //     // { title: "Assign", link: "", mainItem: false, selected: false },
+  //     // { title: "List", link: "", mainItem: false, selected: false },
+  //   ],
+  // },
+  {
+    for: ["owner"],
+    title: "View Restaurant",
+    link: "/",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [],
+  },
+  {
+    for: ["owner"],
+    title: "Menu",
+    link: "/",
+    mainItem: true,
+    open: false,
+    selected: false,
+    subList: [
+      { title: "Add Category", link: "", mainItem: false, selected: false },
+      { title: "List Category", link: "", mainItem: false, selected: false },
+      { title: "Add Item", link: "", mainItem: false, selected: false },
+      { title: "List Item", link: "", mainItem: false, selected: false },
+    ],
+  },
+  // {
+  //   for: ["owner","staff","delivery","admin","moderator"],
+  //   title: "Log Out",
+  //   link: "logout",
+  //   mainItem: true,
+  //   open: false,
+  //   selected: false,
+  //   subList: [],
+  // },
 ];

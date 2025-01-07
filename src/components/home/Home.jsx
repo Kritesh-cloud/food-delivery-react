@@ -9,7 +9,8 @@ import { HomeRestaurantProvider } from "../../context/HomeRestaurantContext";
 import AuthForm from "../authentication/AuthForm";
 const Home = () => {
   const [showFrom, setShowForm] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   const toggelShowFrom = () => {
     setShowForm(!showFrom);
@@ -18,9 +19,19 @@ const Home = () => {
   const toggelSignInUp = () => {
     setIsSignUp(!isSignUp);
   };
+
+  const toggleRefresh = () => {
+    setRefresh(!refresh);
+  };
   useState(() => {
     console.log("showFrom", showFrom);
+    toggleRefresh();
   }, [showFrom]);
+
+  useState(() => {
+    toggleRefresh();
+  }, []);
+
   return (
     <div className="flexcol bor relative">
       <div className={`${showFrom ? "" : "hidden"} bor h-100 w100 fixed  z-10`}>
@@ -47,10 +58,20 @@ const Home = () => {
         form
       </div> */}
       <section className="borx p-6 mb-5 hidden">Section00</section>
-      <section className="">
-        <Navigation showFrom={showFrom} isSignUp={isSignUp} setShowForm={setShowForm} />
+      <section className="z-50">
+        <div
+          className="bor fixed w100 bg-white "
+          style={{ boxShadow: "2px 0 5px rgba(0,0,0,.5)" }}
+        >
+          <Navigation
+            cartRefresh={refresh}
+            showFrom={showFrom}
+            isSignUp={isSignUp}
+            setShowForm={setShowForm}
+          />
+        </div>
       </section>
-      <section className="">
+      <section className="mt-[80px]">
         <Hero />
       </section>
       <section className="">
@@ -79,7 +100,7 @@ const Home = () => {
       </section>
       <section className="mb-20">
         <HomeRestaurantProvider>
-          <Restaurants title="Best Eateries for Every Taste" browseId={1} />
+          <Restaurants title="Best Eateries for Every Taste" browseId={4} />
         </HomeRestaurantProvider>
       </section>
       <section className="borx p-6 mb-5 none">offer</section>

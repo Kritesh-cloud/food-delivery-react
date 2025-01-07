@@ -1,10 +1,11 @@
 import { Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getHomeRestaurant } from "../../context/HomeRestaurantContext";
+import { useNavigate } from "react-router";
 
-const Restaurant1 = ({ item, index }) => {
+const Restaurant1 = ({ item, index,navi }) => {
   return (
-    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer">
+    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer" onClick={()=>(navi(item.id))}>
       <div className="flex ">
         <img src={item.backgroundUrl} className="rounded" />
       </div>
@@ -15,6 +16,7 @@ const Restaurant1 = ({ item, index }) => {
         <div className="flexcol bor">
           <div>{item.name}</div>
           <div className="text-[12px] text-[#444]">{item.address}</div>
+          {/* {item.id} */}
         </div>
       </div>
     </div>
@@ -66,17 +68,43 @@ const Restaurant3 = ({ item, index }) => {
   );
 };
 
+const Restaurant4 = ({ item, index }) => {
+  return (
+    
+    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer ">
+      <div className="flex ">
+        <img src={item.backgroundUrl} className="rounded" />
+      </div>
+      <div className="flex gap-3 bor pb-3">
+        <div className="bor">
+          <img src={item.iconUrl} className="w-10 bor" />
+        </div>
+        <div className="flexcol bor">
+          <div>{item.name}</div>
+          <div className="text-[12px] text-[#444]">{item.address}</div>
+        </div>
+      </div>
+    </div>
+    
+  );
+};
+
 const Restaurants = ({ title, browseId }) => {
+  let navigate = useNavigate();
   const {
     browseList1,
     browseList2,
     browseList3,
+    browseList4,
     browseList,
     browseListLoading,
   } = getHomeRestaurant();
 
   const [showBrowseList, setShowBrowseList] = useState([]);
 
+  const navigateRestaurant = (id) => {
+    navigate("restaurant-detail/"+id)
+  }
   useEffect(() => {
     if (browseId == 1) {
       setShowBrowseList(browseList1);
@@ -84,8 +112,10 @@ const Restaurants = ({ title, browseId }) => {
       setShowBrowseList(browseList2);
     } else if (browseId == 3) {
       setShowBrowseList(browseList3);
+    } else if (browseId == 4) {
+      setShowBrowseList(browseList4);
     }
-  }, [browseList1, browseList2, browseList3]);
+  }, [browseList1, browseList2, browseList3, browseList4]);
   return (
     <div
       className={`${
@@ -103,23 +133,30 @@ const Restaurants = ({ title, browseId }) => {
           } w100 flex  mt-5 bor overflow-auto hideScroll`}
         >
           <div
-            className={`${browseId == 1 ? "gap-8" : ""} ${browseId == 2 ? "gap-3" : ""} ${browseId == 3 ? "gap-5" : ""} flex `}
+            className={`${browseId == 1 || browseId == 4 ? "gap-8" : ""} ${
+              browseId == 2 ? "gap-3" : ""
+            } ${browseId == 3 ? "gap-5" : ""} flex `}
           >
             {showBrowseList &&
               showBrowseList.map((item, index) => (
                 <div key={index} className="flex">
                   {browseId == 1 ? (
-                    <Restaurant1 item={item} index={index} />
+                    <Restaurant1 item={item} index={index} navi={navigateRestaurant}/>
                   ) : (
                     ""
                   )}
                   {browseId == 2 ? (
-                    <Restaurant2 item={item} index={index} />
+                    <Restaurant2 item={item} index={index} navi={navigateRestaurant}/>
                   ) : (
                     ""
                   )}
                   {browseId == 3 ? (
-                    <Restaurant3 item={item} index={index} />
+                    <Restaurant3 item={item} index={index} navi={navigateRestaurant}/>
+                  ) : (
+                    ""
+                  )}
+                  {browseId == 4 ? (
+                    <Restaurant4 item={item} index={index} navi={navigateRestaurant}/>
                   ) : (
                     ""
                   )}

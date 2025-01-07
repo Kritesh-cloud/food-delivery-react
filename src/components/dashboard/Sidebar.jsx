@@ -1,100 +1,112 @@
-import * as React from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import React, { useEffect, useState } from "react";
+import Collapse from "@mui/material/Collapse";
+import { colors, sideBarData } from "../../constant/index";
+import { Box, Typography } from "@mui/material";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useNavigate } from 'react-router-dom';
 
-const Sidebar = () => {
-  const [open, setOpen] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+const SubSideBar = ({ item, handelNavigation }) => {
+  // console.log(item);
 
   return (
-    <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Nested List Items
-        </ListSubheader>
-      }
-    >
-      <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
-
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-      da
-        {/* <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </List> */}
-      </Collapse>
-      
-    </List>
+    <Box className="bor bor cursor-pointer">
+      <Typography
+        className="flex py-2 px-5 hover:bg-[#888]"
+        onClick={() => handelNavigation(item)}
+      >
+        {item.title}
+        <div className={`${item.subList.length > 0 ? "" : "hidden"}`}>
+          {item.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        </div>
+      </Typography>
+      {item.subList.length > 0 ? (
+        <>
+          <Collapse in={item.open} timeout="auto" unmountOnExit>
+            {item.subList.map((subItem, index) => (
+              <Typography
+                key={index}
+                className="pl-10 py-2 hover:bg-[#888]"
+                onClick={() => handelNavigation(subItem)}
+              >
+                {subItem.title}
+              </Typography>
+            ))}
+          </Collapse>
+        </>
+      ) : (
+        <div></div>
+      )}
+    </Box>
   );
-}
+};
+
+const Sidebar = () => {
+  const [userAuthority, setUserAuthority] = useState("admin");
+
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  const handelListOpen = (selectedItem) => {
+    
+    const newData = data.map((item) => {
+      if (item == selectedItem) {
+        item.open = !item.open;
+      }
+      return item;
+    });
+    console.log("newData", newData);
+    setData(newData);
+  };
+
+  const handelNavigation = (selectedItem) => {
+    if (selectedItem.mainItem && selectedItem.subList.length > 0) {
+      handelListOpen(selectedItem);
+    } else if (selectedItem.mainItem && selectedItem.subList.length == 0) {
+
+      console.log("click link 1", );
+      navigate('/dashboard'+selectedItem.link)
+    } else if (!selectedItem.mainItem) {
+      console.log("click link 2", selectedItem.link);
+      navigate('/dashboard'+selectedItem.link)
+    }
+  };
+
+  useEffect(() => setData(sideBarData), []);
+
+  return (
+    <Box className="py-5 h100" sx={{ background: "#ddd" }}>
+      <Typography
+        variant="h5"
+        className="text-[20px] font-semibold px-5 pb-4"
+        sx={{ fontWeight: 600 }}
+      >
+        Dashboard
+      </Typography>
+      <div className="bor">
+        {data.map((item, index) => (
+          <div key={index}>
+            {
+              // true
+            item.for.includes(userAuthority) 
+            ? (
+              <div key={item.title + index}>
+                <SubSideBar
+                  item={item}
+                  handelListOpen={handelListOpen}
+                  handelNavigation={handelNavigation}
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
+};
 
 export default Sidebar;
 
-/*
-
-write me react component code with tailwind css for side bar
-
-write code so this json data is used for code
-
-const data = [
-  {title:""}
-
-]
-
-*/
