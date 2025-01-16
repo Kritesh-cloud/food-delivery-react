@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 const RestaurantForm = ({ onSubmit, initialData, isCreate }) => {
   const [formData, setFormData] = useState({
-    name: isCreate ? "dum dum" : initialData?.name || "",
-    description: isCreate ? "dum is dummy" : initialData?.description || "",
-    address: isCreate ? "that street" : initialData?.address || "",
-    contactNumber: isCreate ? "d" : initialData?.contactNumber || "",
-    email: isCreate ? "dummy@gmai.com" : initialData?.email || "",
-    openingTime: isCreate ? "06:00" : initialData?.openingTime || "",
-    closingTime: isCreate ? "21:00" : initialData?.closingTime || "",
+    name: isCreate ? "" : initialData?.name || "",
+    description: isCreate ? "" : initialData?.description || "",
+    address: isCreate ? "" : initialData?.address || "",
+    contactNumber: isCreate ? "" : initialData?.contactNumber || "",
+    email: isCreate ? "" : initialData?.email || "",
+    openingTime: isCreate ? "" : initialData?.openingTime || "",
+    closingTime: isCreate ? "" : initialData?.closingTime || "",
     icon: null,
     background: null,
     gallery: [],

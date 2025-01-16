@@ -69,7 +69,6 @@ const Home = () => {
             showFrom={showFrom}
             isSignUp={isSignUp}
             setShowForm={setShowForm}
-            cartRefresh={refresh}
           />
         </div>
       </section>

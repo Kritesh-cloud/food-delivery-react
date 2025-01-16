@@ -11,8 +11,8 @@ const AuthForm = ({ isSignUp, toggelShowFrom, toggelSignInUp,toggleRefresh }) =>
   */
   const [formData, setFormData] = useState({
     name: "",
-    email: "aakriti@gmail.com",
-    password: "password",
+    email: "",
+    password: "",
   });
 
   const [errors, setErrors] = useState({});

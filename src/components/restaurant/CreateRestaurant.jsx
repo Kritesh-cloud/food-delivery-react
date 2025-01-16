@@ -6,7 +6,7 @@ import axios from "axios";
 
 const CreateRestaurant = () => {
   const [isCreate, setIsCreate] = useState(true);
-  const [userToken, setUserToken] = useState("");
+  const [userToken, setUserToken] = useState(null);
 
   const onSubmit = (formData) => {
     console.log("formData", formData);
@@ -24,43 +24,45 @@ const CreateRestaurant = () => {
     };
     console.log(headers);
     const newFormData = new FormData();
-    const jsonBlob = new Blob([JSON.stringify(formDataCopy)], { type: "application/json" });
+    const jsonBlob = new Blob([JSON.stringify(formDataCopy)], {
+      type: "application/json",
+    });
     newFormData.append("restaurantInfo", jsonBlob, "data.json");
     // newFormData.append("restaurantInfo", JSON.stringify(formDataCopy),"file.json");
-    newFormData.append("icon", formData.icon,"icon.png");
-    newFormData.append("background", formData.background,"backgorund.png");
+    newFormData.append("icon", formData.icon, "icon.png");
+    newFormData.append("background", formData.background, "backgorund.png");
     // newFormData.append("gallery", formData.gallery);
     if (formData.gallery && Array.isArray(formData.gallery)) {
       formData.gallery.forEach((file) => {
         newFormData.append("gallery", file); // Append as "gallery"
       });
     }
-    
+
     for (let [key, value] of newFormData.entries()) {
       console.log(key, value);
     }
 
     axios
-    .post(url, newFormData, headers)
-    .then((response) => {
-      console.log("Response:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error:", error.response || error.message);
-    });
+      .post(url, newFormData, headers)
+      .then((response) => {
+        console.log("Response:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.response || error.message);
+      });
 
     try {
-      if(false)
-      fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: userToken,
-          "Content-Type": "multipart/json",
-        },
-        body: newFormData,
-      })
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
+      if (false)
+        fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: userToken,
+            "Content-Type": "multipart/json",
+          },
+          body: newFormData,
+        })
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -77,8 +79,12 @@ const CreateRestaurant = () => {
       <div>
         <Navigation />
       </div>
-      <div>
-        <RestaurantForm onSubmit={onSubmit} isCreate={isCreate} />
+      <div className="min-h-[500px] bor">
+        {userToken == null ? (
+          <div className="flexmid p-[100px]">Please login before createing restaurant account</div>
+        ) : (
+          <RestaurantForm onSubmit={onSubmit} isCreate={isCreate} />
+        )}
       </div>
       <div>
         <Footer />
