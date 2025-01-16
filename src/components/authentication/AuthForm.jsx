@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 
-const AuthForm = ({ isSignUp, toggelShowFrom, toggelSignInUp }) => {
+const AuthForm = ({ isSignUp, toggelShowFrom, toggelSignInUp,toggleRefresh }) => {
   /*
   const savedData = localStorage.getItem('formData');
     if (savedData) {
@@ -41,16 +41,19 @@ const AuthForm = ({ isSignUp, toggelShowFrom, toggelSignInUp }) => {
       const endPoint = isSignUp
         ? "http://localhost:8080/signUp"
         : "http://localhost:8080/signIn";
+        console.log("endPoint",endPoint)
       axios
         .post(endPoint, formData, {
           headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
-          localStorage.setItem("loginToken", JSON.stringify(res.data.token));
           if (isSignUp) {
             toggelSignInUp();
+            toggleRefresh()
           } else {
+            localStorage.setItem("loginToken", JSON.stringify(res.data.token));
             toggelShowFrom();
+            toggleRefresh()
           }
         })
         .catch((err) => {

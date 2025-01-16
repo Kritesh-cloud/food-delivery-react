@@ -16,6 +16,13 @@ import AssignAuthority from "./components/dashboard/admin/AssignAuthority";
 import Category from "./components/dashboard/admin/Category";
 import LogOut from "./components/comp/LogOut";
 import RestaurantDetail from "./components/home/RestaurantDetail";
+import About from "./components/pages/About";
+import Service from "./components/pages/Service";
+import ContactUs from "./components/pages/ContactUs";
+
+import PaymentSuccess from "./components/payment/PaymentSuccess";
+import PaymentUnsuccess from "./components/payment/PaymentUnsuccess";
+import CreateRestaurant from "./components/restaurant/CreateRestaurant";
 
 const App = () => {
   return (
@@ -36,18 +43,16 @@ const App = () => {
             path="assign-authority/:authority"
             element={<AssignAuthority />}
           />
-          
-          <Route path="logout" element={<LogOut />} /> 
-          {/* <Route path="user" element={<User />} />
-          <Route path="log" element={<Log />} />
-          <Route path="asign-authority/:authority" element={<AssignAuthority />} />
-          <Route path="browse-content/list" element={<CreateBrowseContent />} />
-          <Route path="restaurant" element={<ListRestaurant />} />
-          <Route path="cart" element={<Cart />} />
-          */}
+          <Route path="logout" element={<LogOut />} />
         </Route>
         <Route path="restaurant-detail/:id" element={<RestaurantDetail />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="about" element={<About />} />
+        <Route path="service" element={<Service />} />
+        <Route path="contact" element={<ContactUs />} />
+        <Route path="payment/success" element={<PaymentSuccess />} />
+        <Route path="payment/unsuccess" element={<PaymentUnsuccess />} />
+        <Route path="restaurant/create" element={<CreateRestaurant />} />
         {/* <Route path="cart" element={<Cart />} /> */}
         {/* landing */}
 

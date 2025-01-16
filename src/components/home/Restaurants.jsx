@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import { getHomeRestaurant } from "../../context/HomeRestaurantContext";
 import { useNavigate } from "react-router";
 
-const Restaurant1 = ({ item, index,navi }) => {
+const Restaurant1 = ({ item, index, navi }) => {
   return (
-    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer" onClick={()=>(navi(item.id))}>
+    <div
+      key={index}
+      className="flexcol gap-3 bor w-[240px] cursor-pointer"
+      onClick={() => navi(item.id)}
+    >
       <div className="flex ">
         <img src={item.backgroundUrl} className="rounded" />
       </div>
@@ -23,9 +27,13 @@ const Restaurant1 = ({ item, index,navi }) => {
   );
 };
 
-const Restaurant2 = ({ item, index }) => {
+const Restaurant2 = ({ item, index, navi }) => {
   return (
-    <div key={index} className="flexcol gap-3 bor w-[290px]  cursor-pointer">
+    <div
+      key={index}
+      className="flexcol gap-3 bor w-[290px]  cursor-pointer"
+      onClick={() => navi(item.id)}
+    >
       <div className="flex ">
         <img
           src={item.backgroundUrl}
@@ -49,9 +57,13 @@ const Restaurant2 = ({ item, index }) => {
   );
 };
 
-const Restaurant3 = ({ item, index }) => {
+const Restaurant3 = ({ item, index, navi }) => {
   return (
-    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer">
+    <div
+      key={index}
+      className="flexcol gap-3 bor w-[240px] cursor-pointer"
+      onClick={() => navi(item.id)}
+    >
       <div className="flex ">
         <img src={item.backgroundUrl} className="rounded" />
       </div>
@@ -68,10 +80,13 @@ const Restaurant3 = ({ item, index }) => {
   );
 };
 
-const Restaurant4 = ({ item, index }) => {
+const Restaurant4 = ({ item, index, navi }) => {
   return (
-    
-    <div key={index} className="flexcol gap-3 bor w-[240px] cursor-pointer ">
+    <div
+      key={index}
+      className="flexcol gap-3 bor w-[240px] cursor-pointer "
+      onClick={() => navi(item.id)}
+    >
       <div className="flex ">
         <img src={item.backgroundUrl} className="rounded" />
       </div>
@@ -85,7 +100,6 @@ const Restaurant4 = ({ item, index }) => {
         </div>
       </div>
     </div>
-    
   );
 };
 
@@ -103,8 +117,8 @@ const Restaurants = ({ title, browseId }) => {
   const [showBrowseList, setShowBrowseList] = useState([]);
 
   const navigateRestaurant = (id) => {
-    navigate("restaurant-detail/"+id)
-  }
+    navigate("restaurant-detail/" + id);
+  };
   useEffect(() => {
     if (browseId == 1) {
       setShowBrowseList(browseList1);
@@ -141,22 +155,38 @@ const Restaurants = ({ title, browseId }) => {
               showBrowseList.map((item, index) => (
                 <div key={index} className="flex">
                   {browseId == 1 ? (
-                    <Restaurant1 item={item} index={index} navi={navigateRestaurant}/>
+                    <Restaurant1
+                      item={item}
+                      index={index}
+                      navi={navigateRestaurant}
+                    />
                   ) : (
                     ""
                   )}
                   {browseId == 2 ? (
-                    <Restaurant2 item={item} index={index} navi={navigateRestaurant}/>
+                    <Restaurant2
+                      item={item}
+                      index={index}
+                      navi={navigateRestaurant}
+                    />
                   ) : (
                     ""
                   )}
                   {browseId == 3 ? (
-                    <Restaurant3 item={item} index={index} navi={navigateRestaurant}/>
+                    <Restaurant3
+                      item={item}
+                      index={index}
+                      navi={navigateRestaurant}
+                    />
                   ) : (
                     ""
                   )}
                   {browseId == 4 ? (
-                    <Restaurant4 item={item} index={index} navi={navigateRestaurant}/>
+                    <Restaurant4
+                      item={item}
+                      index={index}
+                      navi={navigateRestaurant}
+                    />
                   ) : (
                     ""
                   )}

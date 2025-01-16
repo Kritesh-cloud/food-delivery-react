@@ -19,16 +19,10 @@ const Navigation = ({ cartRefresh, showFrom, isSignUp, setShowForm }) => {
   const [itemLength, setItemLength] = useState(0);
   const [refresh, setRefresh] = useState(true);
 
-  const data = {
-    headers: {
-      Authorization: userToken,
-    },
-  };
   const logOut = () => {
     localStorage.removeItem("loginToken");
     navigate("/");
     window.location.reload();
-    
   };
 
   const toggleRefresh = () => {
@@ -37,7 +31,6 @@ const Navigation = ({ cartRefresh, showFrom, isSignUp, setShowForm }) => {
 
   const decodeToken = (token) => {
     if (typeof token !== "string") {
-      console.error("Invalid Token: Token must be a string");
       return null;
     }
 
@@ -63,14 +56,19 @@ const Navigation = ({ cartRefresh, showFrom, isSignUp, setShowForm }) => {
     }
   };
 
-  const getUserCart = () => {
-    console.log("header", data);
+  const getUserCart = (userToken) => {
     const path = `http://localhost:8080/user/order/get-user-basket`;
+    
+    const headerData = {
+      headers: {
+        Authorization: userToken,
+      },
+    };
+  
     axios
-      .get(path, data, data)
+      .get(path, headerData, headerData)
       .then((res) => {
-        console.log(res.data);
-        console.log(res.data.menuItemResponses.length);
+        setUserLogedIn(true)
         setItemLength(res.data.menuItemResponses.length);
       })
       .catch((err) => {
@@ -81,29 +79,20 @@ const Navigation = ({ cartRefresh, showFrom, isSignUp, setShowForm }) => {
   const setToken = () => {
     const loginToken = localStorage.getItem("loginToken");
     if (loginToken) {
-      setUserToken(`Bearer ${JSON.parse(loginToken)}`);
-      decodeToken(JSON.parse(loginToken));
-      toggleRefresh();
+      const bearerToken = `Bearer ${JSON.parse(loginToken)}`
+      setUserToken(bearerToken);
+      decodeToken(bearerToken);
+      getUserCart(bearerToken);
     }
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     setToken();
-  }, []);
+  },[]);
 
-  useEffect(() => {
-    if (localStorage.getItem("loginToken") != null) {
-      setUserLogedIn(true);
-    } else {
-      setUserLogedIn(false);
-      setUserRoles([]);
-    }
-    setToken();
-  }, [showFrom, isSignUp]);
-
-  useEffect(() => {
-    getUserCart();
-  }, [refresh,cartRefresh]);
+  useEffect(()=>{
+    setToken()
+  },[cartRefresh]);
 
   return (
     <div className="flex jcsb mx-24 my-5 bor">

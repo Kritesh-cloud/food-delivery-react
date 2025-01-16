@@ -30,7 +30,8 @@ export const HomeRestaurantProvider = ({ children }) => {
 
   const getRestaurantList = () => {
     axios
-      .get(`http://localhost:8080/list-restaurant-details`)
+      // .get(`http://localhost:8080/list-restaurant-details`)
+      .get(`http://localhost:8080/list-short-restaurant-details`)
       .then((res) => {
         setRestaurantList(...restaurantList, res.data);
       })

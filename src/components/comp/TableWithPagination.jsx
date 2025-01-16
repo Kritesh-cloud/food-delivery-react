@@ -28,7 +28,7 @@ const TableWithPagination = ({ title, data, columns, loading   }) => {
         loading?<div>Loading...</div>:<></>
       }
       <table className={`${loading?"hidden":""} min-w-full border-collapse border border-gray-300 shadow-sm rounded-lg`}>
-        <thead className="bg-blue-500 text-white">
+        <thead className="bg-red-500 text-white">
           <tr>
             {columns.map((col) => (
               <th key={col.key} className="py-2 px-6 border-b text-left">

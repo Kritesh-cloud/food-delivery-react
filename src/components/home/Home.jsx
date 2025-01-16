@@ -24,7 +24,7 @@ const Home = () => {
     setRefresh(!refresh);
   };
   useState(() => {
-    console.log("showFrom", showFrom);
+    // console.log("showFrom", showFrom);
     toggleRefresh();
   }, [showFrom]);
 
@@ -45,6 +45,7 @@ const Home = () => {
               isSignUp={isSignUp}
               toggelShowFrom={toggelShowFrom}
               toggelSignInUp={toggelSignInUp}
+              toggleRefresh={toggleRefresh}
             />
           </div>
         </div>
@@ -68,6 +69,7 @@ const Home = () => {
             showFrom={showFrom}
             isSignUp={isSignUp}
             setShowForm={setShowForm}
+            cartRefresh={refresh}
           />
         </div>
       </section>

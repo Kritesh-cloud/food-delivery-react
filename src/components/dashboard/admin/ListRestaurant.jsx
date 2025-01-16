@@ -57,7 +57,8 @@ const ListRestaurant = () => {
 
   const getRestaurantList = () => {
     axios
-      .get(`http://localhost:8080/list-restaurant-details`)
+      // .get(`http://localhost:8080/list-restaurant-details`)
+      .get(`http://localhost:8080/list-short-restaurant-details`)
       .then((res) => {
         const updatedData = res.data.map((item,index) => ({
           ...item,
@@ -68,7 +69,7 @@ const ListRestaurant = () => {
         setDataList(updatedData);
         // setDataList(...dataList, res.data);
         setLoading(false)
-        console.log("res.data", res.data);
+        console.log("res.data short", res.data);
       })
       .catch((err) => {
         console.log("err", err);

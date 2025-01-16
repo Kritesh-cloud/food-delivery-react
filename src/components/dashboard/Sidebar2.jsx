@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { sideBarData } from "../../constant/index";
 import { useNavigate } from "react-router";
@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 const LogoutConfirmation = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  
 
   const handleLogout = () => {
     localStorage.removeItem("loginToken");
@@ -31,7 +30,6 @@ const LogoutConfirmation = () => {
               Are you sure you want to log out?
             </h2>
             <div className="flex justify-center space-x-4">
-              
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all"
@@ -65,6 +63,47 @@ const Sidebar2 = ({ role }) => {
     setSidebarItems(updatedItems);
   };
 
+  const [userRoles, setUserRoles] = useState([]);
+
+  const decodeToken = (token) => {
+    if (typeof token !== "string") {
+      return null;
+    }
+    try {
+      // Split the token into parts
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      const roless = JSON.parse(jsonPayload).roles;
+      setUserRoles(roless);
+    } catch (error) {
+      console.error("Invalid Token", error);
+    }
+  };
+
+  const setToken = () => {
+    const loginToken = localStorage.getItem("loginToken");
+    if (loginToken) {
+      const bearerToken = `Bearer ${JSON.parse(loginToken)}`;
+      decodeToken(bearerToken);
+    }
+  };
+
+  useEffect(() => {
+    setToken();
+  }, []);
+
+  useEffect(() => {
+    console.log("userRoles", userRoles);
+    console.log("iten", sidebarItems[0].for);
+  }, [userRoles]);
+
   return (
     <div className="h-screen w-64 bg-gray-900 text-white shadow-lg">
       <div className="p-5 text-lg font-bold border-b border-gray-700">
@@ -73,7 +112,7 @@ const Sidebar2 = ({ role }) => {
       <ul className="space-y-2 p-3">
         {sidebarItems.map(
           (item, index) =>
-            item.for.includes(role) && (
+            userRoles.some((role) => item.for.includes(role)) && (
               <li key={index} className="group">
                 {item.subList.length > 0 ? (
                   <>

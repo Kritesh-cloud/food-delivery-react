@@ -10,9 +10,9 @@ export const navigation = [
   { title: "Home", link: "/", loggedIn: false },
   { title: "About", link: "/about", loggedIn: false },
   { title: "Service", link: "/service", loggedIn: false },
-  { title: "Menu", link: "/menu", loggedIn: false },
+  // { title: "Menu", link: "/menu", loggedIn: false },
   { title: "Contact Us", link: "/contact", loggedIn: false },
-  { title: "Dashboard", link: "/dashboard/restaurant/list", loggedIn: true },
+  { title: "Dashboard", link: "/dashboard", loggedIn: true },
 ];
 export const navigationRightLink = {
   search: {
